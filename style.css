@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.note__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.note:checked {
+  text-decoration: line-through;
+}
+
+.note__input {
+  display: block;
+  width: 100%;
+}
+
+.note__button {
+  width: 100%;
+}
