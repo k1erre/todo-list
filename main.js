@@ -21,7 +21,8 @@ BUTTON.addEventListener("click", (event) => {
 
   noteWrapper.id = uniqueId;
   note.type = "checkbox";
-  note.className = uniqueId;
+  note.classList.add(uniqueId);
+  note.classList.add("note");
   label.innerText = INPUT.value;
   label.className = "label";
   editNote.innerText = "E";
