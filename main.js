@@ -4,18 +4,22 @@ const INPUT = document.querySelector(".note__input");
 
 const addNote = (id, content) => {
   const noteWrapper = document.createElement("div");
+  const checkBoxAndLabelWrapper = document.createElement("div");
   const note = document.createElement("input");
   const label = document.createElement("span");
+  const buttonWrapper = document.createElement("div");
   const editNote = document.createElement("button");
   const deleteNote = document.createElement("button");
 
   noteWrapper.id = id;
   noteWrapper.className = "note__wrapper";
+  checkBoxAndLabelWrapper.className = "checkbox-and-label__wrapper";
   note.type = "checkbox";
   note.classList.add(id);
   note.classList.add("note__checkbox");
   label.innerText = content;
   label.className = "note__label";
+  buttonWrapper.className = "button__wrapper";
   editNote.innerText = "E";
   editNote.className = "note__button_edit";
   editNote.classList.add(id);
@@ -23,7 +27,10 @@ const addNote = (id, content) => {
   deleteNote.className = "note__button_delete";
   deleteNote.classList.add(id);
 
-  noteWrapper.append(note, label, editNote, deleteNote);
+  checkBoxAndLabelWrapper.append(note, label);
+  buttonWrapper.append(editNote, deleteNote);
+
+  noteWrapper.append(checkBoxAndLabelWrapper, buttonWrapper);
   CONTAINER.appendChild(noteWrapper);
 };
 
@@ -38,36 +45,45 @@ const deleteNote = (id) => {
 };
 
 const startEdit = (id, noteWrapper, target) => {
+  const checkBoxAndLabelWrapper = noteWrapper.querySelector(
+    ".checkbox-and-label__wrapper"
+  );
+  const buttonWrapper = noteWrapper.querySelector(".button__wrapper");
   const editNoteInput = document.createElement("input");
   const confirmEdit = document.createElement("button");
-  const label = noteWrapper.querySelector(".note__label");
+  const label = checkBoxAndLabelWrapper.querySelector(".note__label");
   editNoteInput.classList.add("note__input_edit");
   editNoteInput.classList.add(id);
   editNoteInput.value = label.innerText;
   confirmEdit.classList.add("note__button_confirm");
   confirmEdit.classList.add(id);
   confirmEdit.innerText = "C";
-  noteWrapper.removeChild(label);
-  noteWrapper.insertBefore(editNoteInput, target);
-  noteWrapper.insertBefore(confirmEdit, target);
+  label.remove();
+  checkBoxAndLabelWrapper.appendChild(editNoteInput);
+  buttonWrapper.insertBefore(confirmEdit, target);
   target.remove();
 };
 
 const confirmEdit = (id, noteWrapper, target) => {
+  const checkBoxAndLabelWrapper = noteWrapper.querySelector(
+    ".checkbox-and-label__wrapper"
+  );
+  const buttonWrapper = noteWrapper.querySelector(".button__wrapper");
   const editNote = document.createElement("button");
+  const deleteNote = buttonWrapper.querySelector(".note__button_delete");
   const label = document.createElement("span");
   const editNoteInput = noteWrapper.querySelector(".note__input_edit");
   const content = editNoteInput.value || "Empty";
   editNote.innerText = "E";
-  editNote.classList.add("note__edit");
+  editNote.classList.add("note__button_edit");
   editNote.classList.add(id);
   label.innerText = content;
   label.className = "note__label";
 
-  noteWrapper.insertBefore(label, editNoteInput);
-  noteWrapper.insertBefore(editNote, editNoteInput);
-  noteWrapper.removeChild(target);
-  noteWrapper.removeChild(editNoteInput);
+  checkBoxAndLabelWrapper.appendChild(label);
+  buttonWrapper.insertBefore(editNote, deleteNote);
+  buttonWrapper.removeChild(target);
+  checkBoxAndLabelWrapper.removeChild(editNoteInput);
 
   writeStorage(id, content);
 };
