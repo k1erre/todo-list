@@ -8,15 +8,16 @@
   flex-direction: column;
 }
 
-.note:checked + .label {
+.note__wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.note__checkbox:checked + .note__label {
   text-decoration: line-through;
 }
 
-.note__input {
-  display: block;
-  width: 100%;
-}
-
+.note__input,
 .note__button {
   width: 100%;
 }
