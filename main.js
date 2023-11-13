@@ -34,6 +34,12 @@ const addNote = (id, content) => {
 
   noteWrapper.append(checkBoxAndLabelWrapper, buttonWrapper);
   CONTAINER.appendChild(noteWrapper);
+
+  const trash = noteWrapper.querySelector(".fa-trash");
+  trash.classList.add(id);
+
+  const pen = noteWrapper.querySelector(".fa-pen");
+  pen.classList.add(id);
 };
 
 const writeStorage = (id, content) => {
@@ -47,6 +53,7 @@ const deleteNote = (id) => {
 };
 
 const startEdit = (id, noteWrapper, target) => {
+  console.log(id, noteWrapper, target);
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
     ".checkbox-and-label__wrapper"
   );
@@ -54,6 +61,9 @@ const startEdit = (id, noteWrapper, target) => {
   const editNoteInput = document.createElement("input");
   const confirmEdit = document.createElement("button");
   const label = checkBoxAndLabelWrapper.querySelector(".note__label");
+  if (target === noteWrapper.querySelector(".fa-pen")) {
+    target = noteWrapper.querySelector(".note__button", ".edit");
+  }
   editNoteInput.classList.add("note__input_edit");
   editNoteInput.classList.add(id);
   editNoteInput.value = label.innerText;
@@ -65,9 +75,13 @@ const startEdit = (id, noteWrapper, target) => {
   checkBoxAndLabelWrapper.appendChild(editNoteInput);
   buttonWrapper.insertBefore(confirmEdit, target);
   target.remove();
+
+  const check = noteWrapper.querySelector(".fa-check");
+  check.classList.add(id);
 };
 
 const confirmEdit = (id, noteWrapper, target) => {
+  console.log(id, noteWrapper, target);
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
     ".checkbox-and-label__wrapper"
   );
@@ -77,6 +91,9 @@ const confirmEdit = (id, noteWrapper, target) => {
   const label = document.createElement("span");
   const editNoteInput = noteWrapper.querySelector(".note__input_edit");
   const content = editNoteInput.value || "Empty";
+  if (target === noteWrapper.querySelector(".fa-check")) {
+    target = noteWrapper.querySelector(".note__button", ".confirm");
+  }
   editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
   editNote.classList.add("note__button");
   editNote.classList.add("edit");
@@ -88,6 +105,9 @@ const confirmEdit = (id, noteWrapper, target) => {
   buttonWrapper.insertBefore(editNote, deleteNote);
   buttonWrapper.removeChild(target);
   checkBoxAndLabelWrapper.removeChild(editNoteInput);
+
+  const pen = noteWrapper.querySelector(".fa-pen");
+  pen.classList.add(id);
 
   writeStorage(id, content);
 };
@@ -123,22 +143,22 @@ CONTAINER.addEventListener("click", (event) => {
   const noteWrapper = document.getElementById(id);
 
   if (
-    event.target.className.includes("delete") &&
-    event.target.className.includes("note__button")
+    event.target.className.includes("note__button delete") ||
+    event.target.className.includes("fa-solid fa-trash")
   ) {
     deleteNote(parseInt(id), noteWrapper);
   }
 
   if (
-    event.target.className.includes("edit") &&
-    event.target.className.includes("note__button")
+    event.target.className.includes("note__button edit") ||
+    event.target.className.includes("fa-pen")
   ) {
     startEdit(id, noteWrapper, event.target);
   }
 
   if (
-    event.target.className.includes("confirm") &&
-    event.target.className.includes("note__button")
+    event.target.className.includes("note__button confirm") ||
+    event.target.className.includes("fa-check")
   ) {
     confirmEdit(id, noteWrapper, event.target);
   }
