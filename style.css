@@ -38,6 +38,8 @@ header {
 
 .note__wrapper {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
   margin: 10px;
   padding: 10px;
@@ -61,7 +63,34 @@ header {
 }
 
 .note__button {
+  font-size: 20px;
+  margin-left: 5px;
+  color: white;
+  border: none;
+  border-radius: 5px;
   background: rgb(122, 39, 158);
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.note__button:hover {
+  color: rgb(122, 39, 158);
+  background: white;
+  outline: 1px solid rgb(122, 39, 158);
+}
+
+.note__input_edit {
+  font-size: 20px;
+  margin-left: 10px;
+  border: 2px solid gray;
+  border-radius: 5px;
+  transition: all 0.5s;
+  width: 75ch;
+  max-width: 100%;
+}
+
+.note__input_edit:hover {
+  border-color: rgb(122, 39, 158);
 }
 
 .plus__button {
@@ -82,8 +111,13 @@ header {
 
 .plus__button:hover {
   background: white;
-  border: 1px rgb(122, 39, 158) solid;
+  outline: 1px rgb(122, 39, 158) solid;
   color: rgb(122, 39, 158);
+}
+
+.checkbox-and-label__wrapper {
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 1024px) {
@@ -92,6 +126,10 @@ header {
     width: 90px;
     height: 90px;
   }
+
+  .note__input_edit {
+    width: 50ch;
+  }
 }
 
 @media (max-width: 720px) {
@@ -99,6 +137,32 @@ header {
     left: 70%;
     height: 80px;
     width: 80px;
+    font-size: 5vh;
+  }
+
+  .note__button {
+    font-size: 25px;
+  }
+
+  .note__input_edit {
+    width: 30ch;
+  }
+}
+
+@media (max-width: 480px) {
+  .plus__button {
+    left: 65%;
+    height: 70px;
+    width: 70px;
+    font-size: 4vh;
+  }
+
+  .note__button {
+    font-size: 30px;
+  }
+
+  .note__input_edit {
+    width: 15ch;
   }
 }
 
@@ -107,5 +171,14 @@ header {
     left: 65%;
     height: 70px;
     width: 70px;
+    font-size: 4vh;
+  }
+
+  .note__button {
+    font-size: 30px;
+  }
+
+  .note__input_edit {
+    width: 12ch;
   }
 }

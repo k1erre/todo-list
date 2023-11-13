@@ -21,10 +21,12 @@ const addNote = (id, content) => {
   label.className = "note__label";
   buttonWrapper.className = "button__wrapper";
   editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
-  editNote.className = "note__button_edit";
+  editNote.classList.add("note__button");
+  editNote.classList.add("edit");
   editNote.classList.add(id);
   deleteNote.innerHTML = '<i class="fa-solid fa-trash"></i>';
-  deleteNote.className = "note__button_delete";
+  deleteNote.classList.add("note__button");
+  deleteNote.classList.add("delete");
   deleteNote.classList.add(id);
 
   checkBoxAndLabelWrapper.append(note, label);
@@ -55,7 +57,8 @@ const startEdit = (id, noteWrapper, target) => {
   editNoteInput.classList.add("note__input_edit");
   editNoteInput.classList.add(id);
   editNoteInput.value = label.innerText;
-  confirmEdit.classList.add("note__button_confirm");
+  confirmEdit.classList.add("note__button");
+  confirmEdit.classList.add("confirm");
   confirmEdit.classList.add(id);
   confirmEdit.innerHTML = '<i class="fa-solid fa-check"></i>';
   label.remove();
@@ -70,12 +73,13 @@ const confirmEdit = (id, noteWrapper, target) => {
   );
   const buttonWrapper = noteWrapper.querySelector(".button__wrapper");
   const editNote = document.createElement("button");
-  const deleteNote = buttonWrapper.querySelector(".note__button_delete");
+  const deleteNote = buttonWrapper.querySelector(".delete");
   const label = document.createElement("span");
   const editNoteInput = noteWrapper.querySelector(".note__input_edit");
   const content = editNoteInput.value || "Empty";
   editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
-  editNote.classList.add("note__button_edit");
+  editNote.classList.add("note__button");
+  editNote.classList.add("edit");
   editNote.classList.add(id);
   label.innerText = content;
   label.className = "note__label";
@@ -115,18 +119,27 @@ BUTTON.addEventListener("click", (event) => {
 });
 
 CONTAINER.addEventListener("click", (event) => {
-  const id = event.target.classList[1];
+  const id = event.target.classList[2];
   const noteWrapper = document.getElementById(id);
 
-  if (event.target.className.includes("note__button_delete")) {
+  if (
+    event.target.className.includes("delete") &&
+    event.target.className.includes("note__button")
+  ) {
     deleteNote(parseInt(id), noteWrapper);
   }
 
-  if (event.target.className.includes("note__button_edit")) {
+  if (
+    event.target.className.includes("edit") &&
+    event.target.className.includes("note__button")
+  ) {
     startEdit(id, noteWrapper, event.target);
   }
 
-  if (event.target.className.includes("note__button_confirm")) {
+  if (
+    event.target.className.includes("confirm") &&
+    event.target.className.includes("note__button")
+  ) {
     confirmEdit(id, noteWrapper, event.target);
   }
 });
