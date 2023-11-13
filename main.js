@@ -1,5 +1,5 @@
 const CONTAINER = document.querySelector(".note__container");
-const BUTTON = document.querySelector("button");
+const BUTTON = document.querySelector(".plus__button");
 const INPUT = document.querySelector(".note__input");
 
 const addNote = (id, content) => {
@@ -20,10 +20,10 @@ const addNote = (id, content) => {
   label.innerText = content;
   label.className = "note__label";
   buttonWrapper.className = "button__wrapper";
-  editNote.innerText = "E";
+  editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
   editNote.className = "note__button_edit";
   editNote.classList.add(id);
-  deleteNote.innerText = "X";
+  deleteNote.innerHTML = '<i class="fa-solid fa-trash"></i>';
   deleteNote.className = "note__button_delete";
   deleteNote.classList.add(id);
 
@@ -57,7 +57,7 @@ const startEdit = (id, noteWrapper, target) => {
   editNoteInput.value = label.innerText;
   confirmEdit.classList.add("note__button_confirm");
   confirmEdit.classList.add(id);
-  confirmEdit.innerText = "C";
+  confirmEdit.innerHTML = '<i class="fa-solid fa-check"></i>';
   label.remove();
   checkBoxAndLabelWrapper.appendChild(editNoteInput);
   buttonWrapper.insertBefore(confirmEdit, target);
@@ -74,7 +74,7 @@ const confirmEdit = (id, noteWrapper, target) => {
   const label = document.createElement("span");
   const editNoteInput = noteWrapper.querySelector(".note__input_edit");
   const content = editNoteInput.value || "Empty";
-  editNote.innerText = "E";
+  editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
   editNote.classList.add("note__button_edit");
   editNote.classList.add(id);
   label.innerText = content;
@@ -88,13 +88,30 @@ const confirmEdit = (id, noteWrapper, target) => {
   writeStorage(id, content);
 };
 
-BUTTON.addEventListener("click", (event) => {
-  const uniqueId = Math.ceil(Math.random() * 10 ** 6);
-  const content = INPUT.value || "Empty";
+const onPageLoad = () => {
+  if (localStorage.length !== 0) {
+    const listOfIds = [];
 
-  addNote(uniqueId, content);
-  writeStorage(uniqueId, content);
-  INPUT.value = "";
+    for (const i in localStorage) {
+      if (localStorage.getItem(i)) {
+        listOfIds.push(i);
+      }
+    }
+
+    listOfIds.sort((a, b) => a - b);
+
+    for (const i of listOfIds) {
+      addNote(parseInt(i), localStorage[parseInt(i)]);
+    }
+  }
+};
+
+BUTTON.addEventListener("click", (event) => {
+  const date = new Date();
+  const uniqueId = date.getTime();
+
+  writeStorage(uniqueId, localStorage.length + 1 + ". ");
+  addNote(uniqueId, localStorage.length + ". ");
 });
 
 CONTAINER.addEventListener("click", (event) => {
@@ -114,10 +131,4 @@ CONTAINER.addEventListener("click", (event) => {
   }
 });
 
-if (localStorage.length !== 0) {
-  for (const i in localStorage) {
-    if (localStorage.getItem(i)) {
-      addNote(i, localStorage[i]);
-    }
-  }
-}
+onPageLoad();

@@ -1,6 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  position: relative;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 4vh;
+  line-height: 2em;
+  background: rgb(122, 39, 158);
+  padding-left: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 20%);
+}
+
+.header__button {
+  color: white;
+  font-size: 3vh;
+  border: none;
+  margin-right: 20px;
+  background: transparent;
+  cursor: pointer;
 }
 
 .note__container {
@@ -11,13 +39,73 @@
 .note__wrapper {
   display: flex;
   justify-content: space-between;
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+  border: 3px solid gray;
+  border-radius: 10px;
+  transition: border-color 0.5s;
+}
+
+.note__wrapper:hover {
+  border-color: rgb(122, 39, 158);
+  color: rgb(122, 39, 158);
+}
+
+.note__label {
+  margin-left: 10px;
 }
 
 .note__checkbox:checked + .note__label {
   text-decoration: line-through;
 }
 
-.note__input,
 .note__button {
-  width: 100%;
+  background: rgb(122, 39, 158);
+}
+
+.plus__button {
+  position: absolute;
+  top: 75%;
+  left: 85%;
+  color: white;
+  background: rgb(122, 39, 158);
+  font-size: 6vh;
+  border: none;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 40%);
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.plus__button:hover {
+  background: white;
+  border: 1px rgb(122, 39, 158) solid;
+  color: rgb(122, 39, 158);
+}
+
+@media (max-width: 1024px) {
+  .plus__button {
+    left: 75%;
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 720px) {
+  .plus__button {
+    left: 70%;
+    height: 80px;
+    width: 80px;
+  }
+}
+
+@media (max-width: 320px) {
+  .plus__button {
+    left: 65%;
+    height: 70px;
+    width: 70px;
+  }
 }
