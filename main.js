@@ -7,34 +7,43 @@ const writeNote = (id, content) => {
 };
 
 const deleteNote = (id) => {
+  const noteToDelete = document.getElementById(id);
+  noteToDelete.remove();
   delete localStorage[id];
 };
 
-BUTTON.addEventListener("click", (event) => {
-  const uniqueId = Math.ceil(Math.random() * 10 ** 6);
-
+const addNote = (id, content) => {
   const noteWrapper = document.createElement("div");
   const note = document.createElement("input");
   const label = document.createElement("span");
   const editNote = document.createElement("button");
   const deleteNote = document.createElement("button");
 
-  noteWrapper.id = uniqueId;
+  noteWrapper.id = id;
   note.type = "checkbox";
-  note.classList.add(uniqueId);
+  note.classList.add(id);
   note.classList.add("note");
-  label.innerText = INPUT.value;
+  label.innerText = content;
   label.className = "label";
   editNote.innerText = "E";
   editNote.className = "editNote";
-  editNote.classList.add(uniqueId);
+  editNote.classList.add(id);
   deleteNote.innerText = "X";
   deleteNote.className = "deleteNote";
-  deleteNote.classList.add(uniqueId);
+  deleteNote.classList.add(id);
 
   noteWrapper.append(note, label, editNote, deleteNote);
   CONTAINER.appendChild(noteWrapper);
+};
 
+BUTTON.addEventListener("click", (event) => {
+  const uniqueId = Math.ceil(Math.random() * 10 ** 6);
+
+  if (!INPUT.value) {
+    INPUT.value = "Empty";
+  }
+
+  addNote(uniqueId, INPUT.value);
   writeNote(uniqueId, INPUT.value);
   INPUT.value = "";
 });
@@ -44,9 +53,7 @@ CONTAINER.addEventListener("click", (event) => {
   const noteWrapper = document.getElementById(id);
 
   if (event.target.className.includes("deleteNote")) {
-    const noteToDelete = document.getElementById(id);
-    noteToDelete.remove();
-    deleteNote(parseInt(id));
+    deleteNote(parseInt(id), noteWrapper);
   }
 
   if (event.target.className.includes("editNote")) {
@@ -84,3 +91,11 @@ CONTAINER.addEventListener("click", (event) => {
     noteWrapper.removeChild(editNoteInput);
   }
 });
+
+if (localStorage.length !== 0) {
+  for (const i in localStorage) {
+    if (localStorage.getItem(i)) {
+      addNote(i, localStorage[i]);
+    }
+  }
+}
