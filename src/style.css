@@ -44,7 +44,6 @@ header {
   margin: 20px 10px 10px;
   padding: 10px;
   font-size: 20px;
-  /* border: 3px solid gray; */
   background: lightgray;
   border-radius: 10px;
   transition: all 0.5s;
@@ -97,7 +96,7 @@ header {
 }
 
 .plus__button {
-  position: absolute;
+  position: fixed;
   top: 75%;
   left: 85%;
   color: white;
@@ -110,6 +109,8 @@ header {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 40%);
   cursor: pointer;
   transition: all 0.5s;
+  animation-name: fromBottom;
+  animation-duration: 0.5s;
 }
 
 .plus__button:hover {
@@ -150,6 +151,16 @@ header {
 @keyframes in {
   from {
     transform: translate(-100%);
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes fromBottom {
+  from {
+    transform: translate(0, 300%);
   }
 
   to {

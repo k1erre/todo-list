@@ -13,7 +13,7 @@ const addNote = (id, content) => {
   const deleteNote = document.createElement("button");
 
   noteWrapper.id = id;
-  noteWrapper.className = "note__wrapper";
+  noteWrapper.classList.add("note__wrapper", "in");
   checkBoxAndLabelWrapper.className = "checkbox-and-label__wrapper";
   note.type = "checkbox";
   note.classList.add("note__checkbox");
@@ -202,7 +202,9 @@ CONTAINER.addEventListener("click", (event) => {
     event.target.className.includes("note__button delete") ||
     event.target.className.includes("fa-solid fa-trash")
   ) {
-    deleteNote(parseInt(id), noteWrapper);
+    noteWrapper.classList.remove("in");
+    noteWrapper.classList.add("out");
+    setTimeout(() => deleteNote(parseInt(id), noteWrapper), 500);
   }
 
   if (
