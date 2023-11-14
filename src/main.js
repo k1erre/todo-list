@@ -145,7 +145,7 @@ const openSideBar = () => {
 
   const inAnimation = [
     { transform: "translate(0, 0)" },
-    { transform: "translate(100%, 0)" },
+    { transform: "translate(200%, 0)" },
   ];
 
   const timing = {
@@ -156,7 +156,7 @@ const openSideBar = () => {
   const animation = sideBar.animate(inAnimation, timing);
 
   animation.onfinish = () => {
-    sideBar.style.transform = "translate(100%, 0)";
+    sideBar.style.transform = "translate(200%, 0)";
     isSideBar = true;
   };
 };
@@ -235,7 +235,7 @@ document.body.addEventListener("click", (event) => {
 
     if (!event.target.className.includes("sidebar")) {
       const outAnimation = [
-        { transform: "translate(100%, 0)" },
+        { transform: "translate(200%, 0)" },
         { transform: "translate(0, 0)" },
       ];
 
