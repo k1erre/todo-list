@@ -15,8 +15,8 @@ const addNote = (id, content) => {
   noteWrapper.className = "note__wrapper";
   checkBoxAndLabelWrapper.className = "checkbox-and-label__wrapper";
   note.type = "checkbox";
-  note.classList.add(id);
   note.classList.add("note__checkbox");
+  note.classList.add(id);
   label.innerText = content;
   label.className = "note__label";
   buttonWrapper.className = "button__wrapper";
@@ -53,7 +53,6 @@ const deleteNote = (id) => {
 };
 
 const startEdit = (id, noteWrapper, target) => {
-  console.log(id, noteWrapper, target);
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
     ".checkbox-and-label__wrapper"
   );
@@ -81,7 +80,6 @@ const startEdit = (id, noteWrapper, target) => {
 };
 
 const confirmEdit = (id, noteWrapper, target) => {
-  console.log(id, noteWrapper, target);
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
     ".checkbox-and-label__wrapper"
   );
@@ -90,7 +88,10 @@ const confirmEdit = (id, noteWrapper, target) => {
   const deleteNote = buttonWrapper.querySelector(".delete");
   const label = document.createElement("span");
   const editNoteInput = noteWrapper.querySelector(".note__input_edit");
-  const content = editNoteInput.value || "Empty";
+  const content = {
+    note: editNoteInput.value,
+    isCompleted: JSON.parse(localStorage[id]).isCompleted,
+  } || { note: "Empty", isCompleted: JSON.parse(localStorage[id]).isCompleted };
   if (target === noteWrapper.querySelector(".fa-check")) {
     target = noteWrapper.querySelector(".note__button", ".confirm");
   }
@@ -98,7 +99,7 @@ const confirmEdit = (id, noteWrapper, target) => {
   editNote.classList.add("note__button");
   editNote.classList.add("edit");
   editNote.classList.add(id);
-  label.innerText = content;
+  label.innerText = content.note;
   label.className = "note__label";
 
   checkBoxAndLabelWrapper.appendChild(label);
@@ -109,7 +110,33 @@ const confirmEdit = (id, noteWrapper, target) => {
   const pen = noteWrapper.querySelector(".fa-pen");
   pen.classList.add(id);
 
-  writeStorage(id, content);
+  writeStorage(id, JSON.stringify(content));
+};
+
+const setCompleted = (id, target) => {
+  const noteInStorage = JSON.parse(localStorage[id]);
+
+  if (target === "onPageLoad") {
+    const checkbox = document
+      .getElementById(id)
+      .querySelector(".note__checkbox");
+    if (noteInStorage.isCompleted) checkbox.checked = true;
+    return;
+  }
+
+  if (
+    noteInStorage.isCompleted &&
+    target.className.includes("note__checkbox")
+  ) {
+    noteInStorage.isCompleted = false;
+    writeStorage(id, JSON.stringify(noteInStorage));
+  } else if (
+    !noteInStorage.isCompleted &&
+    target.className.includes("note__checkbox")
+  ) {
+    noteInStorage.isCompleted = true;
+    writeStorage(id, JSON.stringify(noteInStorage));
+  }
 };
 
 const onPageLoad = () => {
@@ -125,7 +152,8 @@ const onPageLoad = () => {
     listOfIds.sort((a, b) => a - b);
 
     for (const i of listOfIds) {
-      addNote(parseInt(i), localStorage[parseInt(i)]);
+      addNote(parseInt(i), JSON.parse(localStorage[parseInt(i)]).note);
+      setCompleted(parseInt(i), "onPageLoad");
     }
   }
 };
@@ -133,13 +161,17 @@ const onPageLoad = () => {
 BUTTON.addEventListener("click", (event) => {
   const date = new Date();
   const uniqueId = date.getTime();
+  const noteToWrite = {
+    note: localStorage.length + 1 + ". ",
+    isCompleted: false,
+  };
 
-  writeStorage(uniqueId, localStorage.length + 1 + ". ");
+  writeStorage(uniqueId, JSON.stringify(noteToWrite));
   addNote(uniqueId, localStorage.length + ". ");
 });
 
 CONTAINER.addEventListener("click", (event) => {
-  const id = event.target.classList[2];
+  const id = event.target.classList[event.target.classList.length - 1];
   const noteWrapper = document.getElementById(id);
 
   if (
@@ -161,6 +193,10 @@ CONTAINER.addEventListener("click", (event) => {
     event.target.className.includes("fa-check")
   ) {
     confirmEdit(id, noteWrapper, event.target);
+  }
+
+  if (event.target.className.includes("note__checkbox")) {
+    setCompleted(id, event.target);
   }
 });
 
