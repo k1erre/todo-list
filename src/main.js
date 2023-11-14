@@ -1,6 +1,7 @@
 const CONTAINER = document.querySelector(".note__container");
 const BUTTON = document.querySelector(".plus__button");
-const INPUT = document.querySelector(".note__input");
+const SIDEBAR_BUTTON = document.querySelector(".header__button");
+let isSideBar = false;
 
 const addNote = (id, content) => {
   const noteWrapper = document.createElement("div");
@@ -139,6 +140,26 @@ const setCompleted = (id, target) => {
   }
 };
 
+const openSideBar = () => {
+  const sideBar = document.createElement("div");
+  const img = document.createElement("div");
+  const githubButton = document.createElement("button");
+  const themeSliderLabel = document.createElement("span");
+  const themeSlider = document.createElement("input");
+
+  sideBar.style =
+    "width: 30%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; background: white; box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);";
+  sideBar.className = "header__sidebar";
+
+  img.style =
+    "width: 100%; height: 30%; background: url(img/violet-rectangle-material-design-0ob3hu6zud8zzm2q.webp) no-repeat";
+
+  document.body.appendChild(sideBar);
+  sideBar.append(img);
+
+  isSideBar = true;
+};
+
 const onPageLoad = () => {
   if (localStorage.length !== 0) {
     const listOfIds = [];
@@ -197,6 +218,19 @@ CONTAINER.addEventListener("click", (event) => {
 
   if (event.target.className.includes("note__checkbox")) {
     setCompleted(id, event.target);
+  }
+});
+
+SIDEBAR_BUTTON.addEventListener("click", (event) => {
+  event.stopPropagation();
+  openSideBar();
+});
+
+document.body.addEventListener("click", (event) => {
+  if (isSideBar) {
+    const sideBar = document.querySelector(".header__sidebar");
+
+    if (event.target !== sideBar) sideBar.remove();
   }
 });
 
