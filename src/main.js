@@ -141,26 +141,24 @@ const setCompleted = (id, target) => {
 };
 
 const openSideBar = () => {
-  const sideBar = document.createElement("div");
-  const img = document.createElement("div");
-  const githubButton = document.createElement("a");
-  const themeSliderLabel = document.createElement("span");
-  const themeSlider = document.createElement("input");
+  const sideBar = document.querySelector(".header__sidebar");
 
-  sideBar.classList.add("header__sidebar");
-  sideBar.classList.add("in");
+  const inAnimation = [
+    { transform: "translate(0, 0)" },
+    { transform: "translate(100%, 0)" },
+  ];
 
-  img.classList.add("sidebar__img");
+  const timing = {
+    duration: 500,
+    iterations: 1,
+  };
 
-  githubButton.innerText = "My GitHub";
-  githubButton.setAttribute("href", "https://github.com/k1erre");
-  githubButton.setAttribute("target", "_blank");
-  githubButton.classList.add("sidebar__button");
+  const animation = sideBar.animate(inAnimation, timing);
 
-  document.body.appendChild(sideBar);
-  sideBar.append(img, githubButton);
-
-  isSideBar = true;
+  animation.onfinish = () => {
+    sideBar.style.transform = "translate(100%, 0)";
+    isSideBar = true;
+  };
 };
 
 const onPageLoad = () => {
@@ -236,10 +234,22 @@ document.body.addEventListener("click", (event) => {
     const sideBar = document.querySelector(".header__sidebar");
 
     if (!event.target.className.includes("sidebar")) {
-      sideBar.classList.remove("in");
-      sideBar.classList.add("out");
-      setTimeout(() => sideBar.remove(), 500);
-      isSideBar = false;
+      const outAnimation = [
+        { transform: "translate(100%, 0)" },
+        { transform: "translate(0, 0)" },
+      ];
+
+      const timing = {
+        duration: 500,
+        iterations: 1,
+      };
+
+      const animation = sideBar.animate(outAnimation, timing);
+
+      animation.onfinish = () => {
+        sideBar.style.transform = "translate(0, 0)";
+        isSideBar = false;
+      };
     }
   }
 });

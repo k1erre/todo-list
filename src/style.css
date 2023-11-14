@@ -132,7 +132,7 @@ header {
   height: 100vh;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -30%;
   z-index: 1;
   background: white;
   box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);
@@ -150,7 +150,7 @@ header {
 
 @keyframes in {
   from {
-    transform: translate(-100%);
+    transform: translate(-100%, 0);
   }
 
   to {
@@ -208,6 +208,7 @@ header {
 
   .header__sidebar {
     width: 40%;
+    left: -40%;
   }
 }
 
@@ -229,6 +230,7 @@ header {
 
   .header__sidebar {
     width: 50%;
+    left: -50%;
   }
 }
 
@@ -258,6 +260,7 @@ header {
 
   .header__sidebar {
     width: 60%;
+    left: -60%;
   }
 }
 
