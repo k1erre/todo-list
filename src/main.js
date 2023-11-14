@@ -143,19 +143,23 @@ const setCompleted = (id, target) => {
 const openSideBar = () => {
   const sideBar = document.createElement("div");
   const img = document.createElement("div");
-  const githubButton = document.createElement("button");
+  const githubButton = document.createElement("a");
   const themeSliderLabel = document.createElement("span");
   const themeSlider = document.createElement("input");
 
   sideBar.style =
-    "width: 30%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; background: white; box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);";
+    "display: flex; flex-direction: column; align-items: center;width: 30%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; background: white; box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);";
   sideBar.className = "header__sidebar";
 
-  img.style =
-    "width: 100%; height: 30%; background: url(img/violet-rectangle-material-design-0ob3hu6zud8zzm2q.webp) no-repeat";
+  img.classList.add("sidebar__img");
+
+  githubButton.innerText = "My GitHub";
+  githubButton.setAttribute("href", "https://github.com/k1erre");
+  githubButton.setAttribute("target", "_blank");
+  githubButton.classList.add("sidebar__button");
 
   document.body.appendChild(sideBar);
-  sideBar.append(img);
+  sideBar.append(img, githubButton);
 
   isSideBar = true;
 };
@@ -230,7 +234,7 @@ document.body.addEventListener("click", (event) => {
   if (isSideBar) {
     const sideBar = document.querySelector(".header__sidebar");
 
-    if (event.target !== sideBar) sideBar.remove();
+    if (!event.target.className.includes("sidebar")) sideBar.remove();
   }
 });
 
