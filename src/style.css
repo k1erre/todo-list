@@ -41,16 +41,17 @@ header {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin: 10px;
+  margin: 20px 10px 10px;
   padding: 10px;
   font-size: 20px;
-  border: 3px solid gray;
+  /* border: 3px solid gray; */
+  background: lightgray;
   border-radius: 10px;
-  transition: border-color 0.5s;
+  transition: all 0.5s;
 }
 
 .note__wrapper:hover {
-  border-color: rgb(122, 39, 158);
+  background: rgb(204, 191, 209);
   color: rgb(122, 39, 158);
 }
 
@@ -122,6 +123,40 @@ header {
   justify-content: center;
 }
 
+.header__sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: white;
+  box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);
+}
+
+.in {
+  animation-name: in;
+  animation-duration: 0.5s;
+}
+
+.out {
+  transform: translate(-100%);
+  transition: 0.5s;
+}
+
+@keyframes in {
+  from {
+    transform: translate(-100%);
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+
 .sidebar__img {
   width: 100%;
   height: 30%;
@@ -139,14 +174,14 @@ header {
   line-height: 2em;
   border: none;
   margin-top: 10px;
-  background: white;
+  background: lightgray;
+  border-radius: 5px;
   transition: all 0.5s;
 }
 
 .sidebar__button:hover {
   background: rgb(204, 191, 209);
   color: rgb(122, 39, 158);
-  border-radius: 5px;
 }
 
 @media (max-width: 1024px) {
@@ -158,6 +193,10 @@ header {
 
   .note__input_edit {
     width: 51ch;
+  }
+
+  .header__sidebar {
+    width: 40%;
   }
 }
 
@@ -175,6 +214,10 @@ header {
 
   .note__input_edit {
     width: 29ch;
+  }
+
+  .header__sidebar {
+    width: 50%;
   }
 }
 
@@ -200,6 +243,10 @@ header {
 
   .note__input_edit {
     width: 14ch;
+  }
+
+  .header__sidebar {
+    width: 60%;
   }
 }
 

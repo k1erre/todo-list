@@ -147,9 +147,8 @@ const openSideBar = () => {
   const themeSliderLabel = document.createElement("span");
   const themeSlider = document.createElement("input");
 
-  sideBar.style =
-    "display: flex; flex-direction: column; align-items: center;width: 30%; height: 100vh; position: absolute; top: 0; left: 0; z-index: 1; background: white; box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);";
-  sideBar.className = "header__sidebar";
+  sideBar.classList.add("header__sidebar");
+  sideBar.classList.add("in");
 
   img.classList.add("sidebar__img");
 
@@ -234,7 +233,12 @@ document.body.addEventListener("click", (event) => {
   if (isSideBar) {
     const sideBar = document.querySelector(".header__sidebar");
 
-    if (!event.target.className.includes("sidebar")) sideBar.remove();
+    if (!event.target.className.includes("sidebar")) {
+      sideBar.classList.remove("in");
+      sideBar.classList.add("out");
+      setTimeout(() => sideBar.remove(), 500);
+      isSideBar = false;
+    }
   }
 });
 
