@@ -173,9 +173,19 @@ const onPageLoad = () => {
 
     listOfIds.sort((a, b) => a - b);
 
-    for (const i of listOfIds) {
-      addNote(parseInt(i), JSON.parse(localStorage[parseInt(i)]).note);
-      setCompleted(parseInt(i), "onPageLoad");
+    for (let i = 0; i < listOfIds.length; i++) {
+      setTimeout(
+        () =>
+          addNote(
+            parseInt(listOfIds[i]),
+            JSON.parse(localStorage[parseInt(listOfIds[i])]).note
+          ),
+        i * 250
+      );
+      setTimeout(
+        () => setCompleted(parseInt(listOfIds[i]), "onPageLoad"),
+        i * 250
+      );
     }
   }
 };
