@@ -19,6 +19,7 @@ const addNote = (id, content, CONTAINER) => {
 
   label.innerText = content;
   label.className = "note__label";
+  label.style.userSelect = "none";
 
   buttonWrapper.className = "button__wrapper";
 
@@ -129,7 +130,7 @@ const setCompleted = (id, target) => {
   localStorage[id] = JSON.stringify(noteInStorage);
 };
 
-const onPageLoad = (addNote, CONTAINER) => {
+const parseTodos = (CONTAINER) => {
   if (localStorage.length) {
     const listOfIds = [];
 
@@ -148,6 +149,6 @@ export {
   deleteNote,
   startEdit,
   confirmEdit,
-  onPageLoad,
+  parseTodos,
   setCompleted,
 };

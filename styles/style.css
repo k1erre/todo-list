@@ -31,6 +31,10 @@ header {
   cursor: pointer;
 }
 
+.header__title {
+  user-select: none;
+}
+
 .note__container {
   display: flex;
   flex-direction: column;

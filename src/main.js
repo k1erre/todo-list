@@ -1,6 +1,6 @@
 import { animateSideBar } from "./modules/animations.js";
 import {
-  onPageLoad,
+  parseTodos,
   addNote,
   deleteNote,
   startEdit,
@@ -70,4 +70,6 @@ document.body.addEventListener("click", (event) => {
   }
 });
 
-onPageLoad(addNote, CONTAINER);
+document.addEventListener("DOMContentLoaded", () => {
+  parseTodos(CONTAINER);
+});
