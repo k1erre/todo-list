@@ -1,29 +1,32 @@
+import { notesPopUp } from "./animations.js";
+
 const addNote = (id, content, CONTAINER) => {
-  const noteWrapper = document.createElement("div");
-  const checkBoxAndLabelWrapper = document.createElement("div");
-  const note = document.createElement("input");
-  const label = document.createElement("span");
-  const buttonWrapper = document.createElement("div");
-  const editNote = document.createElement("button");
-  const deleteNote = document.createElement("button");
+  const noteWrapper = document.createElement("div"),
+    checkBoxAndLabelWrapper = document.createElement("div"),
+    note = document.createElement("input"),
+    label = document.createElement("span"),
+    buttonWrapper = document.createElement("div"),
+    editNote = document.createElement("button"),
+    deleteNote = document.createElement("button");
 
   noteWrapper.id = id;
   noteWrapper.classList.add("note__wrapper", "in");
+
   checkBoxAndLabelWrapper.className = "checkbox-and-label__wrapper";
+
   note.type = "checkbox";
-  note.classList.add("note__checkbox");
-  note.classList.add(id);
+  note.classList.add("note__checkbox", id);
+
   label.innerText = content;
   label.className = "note__label";
+
   buttonWrapper.className = "button__wrapper";
+
   editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
-  editNote.classList.add("note__button");
-  editNote.classList.add("edit");
-  editNote.classList.add(id);
+  editNote.classList.add("note__button", "edit", id);
+
   deleteNote.innerHTML = '<i class="fa-solid fa-trash"></i>';
-  deleteNote.classList.add("note__button");
-  deleteNote.classList.add("delete");
-  deleteNote.classList.add(id);
+  deleteNote.classList.add("note__button", "delete", id);
 
   checkBoxAndLabelWrapper.append(note, label);
   buttonWrapper.append(editNote, deleteNote);
@@ -46,22 +49,23 @@ const deleteNote = (id) => {
 
 const startEdit = (id, noteWrapper, target) => {
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
-    ".checkbox-and-label__wrapper"
-  );
-  const buttonWrapper = noteWrapper.querySelector(".button__wrapper");
-  const editNoteInput = document.createElement("input");
-  const confirmEdit = document.createElement("button");
-  const label = checkBoxAndLabelWrapper.querySelector(".note__label");
+      ".checkbox-and-label__wrapper"
+    ),
+    buttonWrapper = noteWrapper.querySelector(".button__wrapper"),
+    editNoteInput = document.createElement("input"),
+    confirmEdit = document.createElement("button"),
+    label = checkBoxAndLabelWrapper.querySelector(".note__label");
+
   if (target === noteWrapper.querySelector(".fa-pen")) {
     target = noteWrapper.querySelector(".note__button", ".edit");
   }
-  editNoteInput.classList.add("note__input_edit");
-  editNoteInput.classList.add(id);
+
+  editNoteInput.classList.add("note__input_edit", id);
   editNoteInput.value = label.innerText;
-  confirmEdit.classList.add("note__button");
-  confirmEdit.classList.add("confirm");
-  confirmEdit.classList.add(id);
+
+  confirmEdit.classList.add("note__button", "confirm", id);
   confirmEdit.innerHTML = '<i class="fa-solid fa-check"></i>';
+
   label.remove();
   checkBoxAndLabelWrapper.appendChild(editNoteInput);
   buttonWrapper.insertBefore(confirmEdit, target);
@@ -73,24 +77,26 @@ const startEdit = (id, noteWrapper, target) => {
 
 const confirmEdit = (id, noteWrapper, target) => {
   const checkBoxAndLabelWrapper = noteWrapper.querySelector(
-    ".checkbox-and-label__wrapper"
-  );
-  const buttonWrapper = noteWrapper.querySelector(".button__wrapper");
-  const editNote = document.createElement("button");
-  const deleteNote = buttonWrapper.querySelector(".delete");
-  const label = document.createElement("span");
-  const editNoteInput = noteWrapper.querySelector(".note__input_edit");
+      ".checkbox-and-label__wrapper"
+    ),
+    buttonWrapper = noteWrapper.querySelector(".button__wrapper"),
+    editNote = document.createElement("button"),
+    deleteNote = buttonWrapper.querySelector(".delete"),
+    label = document.createElement("span"),
+    editNoteInput = noteWrapper.querySelector(".note__input_edit");
+
   const content = {
     note: editNoteInput.value,
     isCompleted: JSON.parse(localStorage[id]).isCompleted,
   } || { note: "Empty", isCompleted: JSON.parse(localStorage[id]).isCompleted };
+
   if (target === noteWrapper.querySelector(".fa-check")) {
     target = noteWrapper.querySelector(".note__button", ".confirm");
   }
+
   editNote.innerHTML = '<i class="fa-solid fa-pen"></i>';
-  editNote.classList.add("note__button");
-  editNote.classList.add("edit");
-  editNote.classList.add(id);
+  editNote.classList.add("note__button", "edit", id);
+
   label.innerText = content.note;
   label.className = "note__label";
 
@@ -117,14 +123,31 @@ const setCompleted = (id, target) => {
   }
 
   if (target.className.includes("note__checkbox")) {
-    if (noteInStorage.isCompleted) {
-      noteInStorage.isCompleted = false;
-    } else {
-      noteInStorage.isCompleted = true;
-    }
+    noteInStorage.isCompleted = !noteInStorage.isCompleted;
   }
 
   localStorage[id] = JSON.stringify(noteInStorage);
 };
 
-export { addNote, deleteNote, startEdit, confirmEdit, setCompleted };
+const onPageLoad = (addNote, CONTAINER) => {
+  if (localStorage.length) {
+    const listOfIds = [];
+
+    for (const i in localStorage) {
+      localStorage.getItem(i) && listOfIds.push(i);
+    }
+
+    listOfIds.sort((a, b) => a - b);
+
+    notesPopUp(listOfIds, addNote, setCompleted, CONTAINER);
+  }
+};
+
+export {
+  addNote,
+  deleteNote,
+  startEdit,
+  confirmEdit,
+  onPageLoad,
+  setCompleted,
+};
