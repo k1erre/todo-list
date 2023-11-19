@@ -10,7 +10,8 @@ import {
 
 const CONTAINER = document.querySelector(".note__container"),
   BUTTON = document.querySelector(".plus__button"),
-  SIDEBAR_BUTTON = document.querySelector(".header__button");
+  SIDEBAR_BUTTON = document.querySelector(".header__button"),
+  THEME_TOGGLE = document.querySelector(".sidebar__toggle");
 let isSideBar = false;
 
 BUTTON.addEventListener("click", () => {
