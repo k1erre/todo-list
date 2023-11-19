@@ -127,7 +127,7 @@ header {
   height: 100px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   cursor: pointer;
-  transition: all 0.5s;
+  transition: all 0.15s;
   animation-name: fromBottom;
   animation-duration: 0.5s;
 }
