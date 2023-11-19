@@ -1,18 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Open+Sans&display=swap");
 
 * {
   margin: 0;
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+  font-family: "Josefin Sans", sans-serif;
 }
 
 body {
   position: relative;
-  height: 100vh;
+  height: 91.2vh;
+  background: lightgray;
 }
 
 header {
   display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   align-items: center;
   color: white;
   font-size: 4vh;
@@ -23,19 +28,23 @@ header {
 }
 
 .header__button {
+  position: absolute;
+  top: 2.2vh;
+  left: 1.3vw;
   color: white;
   font-size: 3vh;
   border: none;
-  margin-right: 20px;
   background: transparent;
   cursor: pointer;
 }
 
 .header__title {
   user-select: none;
+  margin: auto;
 }
 
 .note__container {
+  margin: 8.8vh 30vw;
   display: flex;
   flex-direction: column;
 }
@@ -48,7 +57,7 @@ header {
   margin: 20px 10px 10px;
   padding: 10px;
   font-size: 20px;
-  background: lightgray;
+  background: white;
   border-radius: 10px;
   transition: all 0.5s;
 }
@@ -73,6 +82,7 @@ header {
 .note__button {
   font-size: 20px;
   margin-left: 5px;
+  padding: 10px;
   color: white;
   border: none;
   border-radius: 5px;
@@ -84,7 +94,6 @@ header {
 .note__button:hover {
   color: rgb(122, 39, 158);
   background: white;
-  outline: 1px solid rgb(122, 39, 158);
 }
 
 .note__input_edit {
@@ -92,7 +101,7 @@ header {
   margin-left: 10px;
   border: 2px solid gray;
   border-radius: 5px;
-  width: 78ch;
+  width: 19ch;
 }
 
 .note__input_edit:hover {
@@ -110,16 +119,15 @@ header {
   border-radius: 50%;
   width: 100px;
   height: 100px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 40%);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: all 0.5s;
   animation-name: fromBottom;
   animation-duration: 0.5s;
 }
 
-.plus__button:hover {
+.plus__button.clicked {
   background: white;
-  outline: 1px rgb(122, 39, 158) solid;
   color: rgb(122, 39, 158);
 }
 
@@ -135,10 +143,10 @@ header {
   width: 30%;
   height: 100vh;
   position: absolute;
-  top: 0;
+  top: -8.8vh;
   left: -60%;
   z-index: 1;
-  background: white;
+  background: lightgray;
   box-shadow: 10px 0 20px rgba(0, 0, 0, 20%);
 }
 
@@ -148,13 +156,13 @@ header {
 }
 
 .out {
-  transform: translate(-100%);
+  transform: translate(-200%);
   transition: 0.5s;
 }
 
 @keyframes in {
   from {
-    transform: translate(-100%, 0);
+    transform: translate(-200%, 0);
   }
 
   to {
@@ -188,8 +196,9 @@ header {
   font-size: 20px;
   line-height: 2em;
   border: none;
+  outline: none;
   margin-top: 10px;
-  background: lightgray;
+  background: white;
   border-radius: 5px;
   transition: all 0.5s;
 }
@@ -207,12 +216,16 @@ header {
   }
 
   .note__input_edit {
-    width: 51ch;
+    width: 15ch;
   }
 
   .header__sidebar {
     width: 40%;
     left: -80%;
+  }
+
+  .note__container {
+    margin: 8.8vh 25vw;
   }
 }
 
@@ -229,16 +242,24 @@ header {
   }
 
   .note__input_edit {
-    width: 29ch;
+    width: 12ch;
   }
 
   .header__sidebar {
     width: 50%;
     left: -100%;
   }
+
+  .note__container {
+    margin: 8.8vh 15vw;
+  }
 }
 
 @media (max-width: 480px) {
+  body {
+    height: 92.8vh;
+  }
+
   header {
     font-size: 3vh;
   }
@@ -259,16 +280,29 @@ header {
   }
 
   .note__input_edit {
-    width: 14ch;
+    width: 10ch;
   }
 
   .header__sidebar {
     width: 60%;
+    top: -7.2vh;
     left: -120%;
+  }
+
+  .note__container {
+    margin: 7.2vh 0;
+  }
+
+  .header__button {
+    top: 1.4vh;
   }
 }
 
 @media (max-width: 320px) {
+  body {
+    height: 94.5vh;
+  }
+
   header {
     font-size: 2.5vh;
   }
@@ -288,7 +322,15 @@ header {
     font-size: 30px;
   }
 
-  .note__input_edit {
-    width: 12ch;
+  .header__sidebar {
+    top: -5.5vh;
+  }
+
+  .note__container {
+    margin: 5.5vh 0;
+  }
+
+  .header__button {
+    top: 1.1vh;
   }
 }

@@ -1,4 +1,4 @@
-import { animateSideBar } from "./modules/animations.js";
+import { animateSideBar, buttonHighlight } from "./modules/animations.js";
 import {
   parseTodos,
   addNote,
@@ -23,6 +23,8 @@ BUTTON.addEventListener("click", () => {
 
   localStorage[uniqueId] = JSON.stringify(noteToWrite);
   addNote(uniqueId, localStorage.length + ". ", CONTAINER);
+
+  buttonHighlight(BUTTON);
 });
 
 CONTAINER.addEventListener("click", (event) => {

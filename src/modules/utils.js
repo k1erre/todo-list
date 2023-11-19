@@ -89,7 +89,7 @@ const confirmEdit = (id, noteWrapper, target) => {
   const content = {
     note: editNoteInput.value,
     isCompleted: JSON.parse(localStorage[id]).isCompleted,
-  } || { note: "Empty", isCompleted: JSON.parse(localStorage[id]).isCompleted };
+  };
 
   if (target === noteWrapper.querySelector(".fa-check")) {
     target = noteWrapper.querySelector(".note__button", ".confirm");

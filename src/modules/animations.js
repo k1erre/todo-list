@@ -36,4 +36,9 @@ const animateSideBar = (type = "in") => {
   };
 };
 
-export { notesPopUp, animateSideBar };
+const buttonHighlight = (button) => {
+  button.classList.add("clicked");
+  setTimeout(() => button.classList.remove("clicked"), 150);
+};
+
+export { notesPopUp, animateSideBar, buttonHighlight };
