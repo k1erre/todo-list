@@ -61,6 +61,7 @@ CONTAINER.addEventListener("click", (event) => {
 SIDEBAR_BUTTON.addEventListener("click", (event) => {
   event.stopPropagation();
 
+  SIDEBAR_BUTTON.classList.add("clicked");
   animateSideBar("in");
   isSideBar = true;
 });
@@ -68,6 +69,7 @@ SIDEBAR_BUTTON.addEventListener("click", (event) => {
 document.body.addEventListener("click", (event) => {
   if (isSideBar && !event.target.className.includes("sidebar")) {
     animateSideBar("out");
+    SIDEBAR_BUTTON.classList.remove("clicked");
     isSideBar = false;
   }
 });

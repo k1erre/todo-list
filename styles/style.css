@@ -36,6 +36,11 @@ header {
   border: none;
   background: transparent;
   cursor: pointer;
+  transition: all 0.5s;
+}
+
+.header__button.clicked {
+  transform: rotate(90deg);
 }
 
 .header__title {
